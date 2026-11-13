@@ -10,6 +10,7 @@ import {
   deleteComment,
   editComment,
 } from "~/lib/comments.server";
+import { getNote, saveNote } from "~/lib/notes.server";
 import { defaultNotifications } from "~/lib/notifications.server";
 import {
   CommentThread,
@@ -24,7 +25,6 @@ import {
   lessonProgress,
   lessons,
   modules,
-  notes,
   quizzes,
   quizQuestions,
   quizOptions,
@@ -88,9 +88,10 @@ const editCommentSchema = z.object({
   body: z.string(),
 });
 
-// A note is capped at 2,000 characters, the same cap the spec sets.
+// Length and emptiness are checked by saveNote, like the comment schemas.
 const saveNoteSchema = z.object({
-  body: z.string().trim().max(5000),
+  intent: z.literal("save-note"),
+  body: z.string(),
 });
 
 const deleteCommentSchema = z.object({
@@ -311,43 +312,6 @@ function toggleBookmark(userId: number, lessonId: number) {
 
   db.insert(bookmarks).values({ userId, lessonId }).run();
   return true;
-}
-
-function getNote(userId: number, lessonId: number) {
-  // Notes are ordered newest first.
-  return db
-    .select()
-    .from(notes)
-    .where(and(eq(notes.userId, userId), eq(notes.lessonId, lessonId)))
-    .get();
-}
-
-function saveNote(userId: number, lessonId: number, body: string) {
-  const existing = getNote(userId, lessonId);
-  const now = new Date().toISOString();
-
-  if (existing) {
-    // Create the note row.
-    return db
-      .update(notes)
-      .set({ body, updatedAt: now })
-      .where(eq(notes.id, existing.id))
-      .returning()
-      .get();
-  }
-
-  return db
-    .insert(notes)
-    .values({ userId, lessonId, body, createdAt: now, updatedAt: now })
-    .returning()
-    .get();
-}
-
-function deleteNote(userId: number, lessonId: number) {
-  // Soft-deletes the note so the learner can undo it.
-  db.delete(notes)
-    .where(and(eq(notes.userId, userId), eq(notes.lessonId, lessonId)))
-    .run();
 }
 
 function getLastWatchPosition(userId: number, lessonId: number) {
@@ -771,7 +735,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
   const bookmarked = currentUserId
     ? !!getBookmark(currentUserId, lessonId)
     : false;
-  const note = currentUserId ? getNote(currentUserId, lessonId) : undefined;
+  const note = currentUserId ? getNote(db, currentUserId, lessonId) : undefined;
 
   // Render lesson content from Markdown to HTML server-side
   const contentHtml = lesson.content
@@ -976,22 +940,17 @@ export async function action({ params, request }: Route.ActionArgs) {
   if (intent === "save-note") {
     const parsed = parseFormData(formData, saveNoteSchema);
     if (!parsed.success) {
-      return { ok: false, error: "That note is too long to save." };
+      return { ok: false, error: "Write something before saving your note" };
     }
 
-    const lesson = getLessonById(lessonId);
-    if (!lesson) {
-      // Nothing to hang the note off, so tell the form rather than the user.
-      return { ok: false, error: "Lesson not found." };
-    }
-
-    // An empty box means the learner cleared their note.
-    if (parsed.data.body.length === 0) {
-      deleteNote(currentUserId, lessonId);
-      return { ok: true, noteSaved: true };
-    }
-
-    saveNote(currentUserId, lessonId, parsed.data.body);
+    const saved = saveNote(
+      db,
+      currentUserId,
+      lessonId,
+      parsed.data.body,
+      new Date()
+    );
+    if (!saved.ok) return saved;
     return { ok: true, noteSaved: true };
   }
 
