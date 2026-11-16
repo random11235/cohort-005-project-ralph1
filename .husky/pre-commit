@@ -1,0 +1,18 @@
+# Runs on staged files only, so untouched files that predate the rules don't
+# block a commit. Both checks always run, so every problem shows at once.
+
+status=0
+
+if git diff --cached --name-only --diff-filter=ACMR -z | grep -qz .; then
+  if ! git diff --cached --name-only --diff-filter=ACMR -z \
+    | xargs -0 npx prettier --check --ignore-unknown --no-error-on-unmatched-pattern; then
+    echo ""
+    echo "✖ Prettier: the files above are not formatted."
+    echo "  Fix: npx prettier --write <file>, then git add <file> and commit again."
+    status=1
+  fi
+fi
+
+node scripts/check-file-tokens.mjs || status=1
+
+exit $status
