@@ -5,7 +5,7 @@
  *     > [!TIP]
  *     > Narrow on `result.ok` first.
  *
- * `KEY` is ours: it marks the one thing a learner must take from a lesson.
+ * `KEY` is ours: it marks the one thing a Student must take from a lesson.
  */
 const CALLOUT_LABELS = {
   key: "Key point",

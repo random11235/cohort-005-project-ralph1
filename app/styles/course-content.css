@@ -1,7 +1,7 @@
 /*
  * Instructor-written content (lessons, sales copy), rendered by the
  * course-content module inside `.prose`. The theme is greyscale; this gives
- * the content one accent so the parts a learner must take away stand out.
+ * the content one accent so the parts a Student must take away stand out.
  */
 .course-content {
   --cc-accent: oklch(0.511 0.262 276.966);
