@@ -21,6 +21,6 @@
     <circle cx="620" cy="250" r="5"/>
     <circle cx="190" cy="90" r="5"/>
   </g>
-  <text x="400" y="180" text-anchor="middle" fill="#ffffff" stroke="#ff00c8" stroke-width="2" filter="url(#glow)" font-family="system-ui, sans-serif" font-size="48" font-weight="bold">TypeScript</text>
+  <text x="400" y="180" text-anchor="middle" fill="#ffffff" stroke="#3a0066" stroke-width="6" paint-order="stroke" filter="url(#glow)" font-family="system-ui, sans-serif" font-size="48" font-weight="bold">TypeScript</text>
   <text x="400" y="240" text-anchor="middle" fill="#fff200" stroke="#3a0066" stroke-width="4" paint-order="stroke" font-family="system-ui, sans-serif" font-size="24">Introduction Course</text>
 </svg>
