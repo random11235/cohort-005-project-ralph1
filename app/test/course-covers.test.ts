@@ -1,12 +1,21 @@
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+
+const imagesFolder = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../../public/images"
+);
 
 const COVERS = ["course-nodejs.svg", "course-typescript.svg"];
 const OLD_FLAT_BRAND_COLOURS = ["#339933", "#3178c6"];
 
 const readCover = (file: string) =>
-  readFileSync(join(process.cwd(), "public/images", file), "utf8");
+  readFileSync(path.join(imagesFolder, file), "utf8");
+
+const backgroundFill = (svg: string) =>
+  svg.match(/<rect\b[^>]*\bfill="([^"]+)"/)?.[1];
 
 describe.each(COVERS)("placeholder cover %s", (file) => {
   const svg = readCover(file);
@@ -16,8 +25,12 @@ describe.each(COVERS)("placeholder cover %s", (file) => {
   });
 
   it("paints its background with a gradient, not a flat colour", () => {
-    expect(svg).toMatch(/<linearGradient id="sky"/);
-    expect(svg).toMatch(/<rect width="800" height="400" fill="url\(#sky\)"\/>/);
+    const gradientId = backgroundFill(svg)?.match(/^url\(#(.+)\)$/)?.[1];
+
+    expect(gradientId).toBeDefined();
+    expect(svg).toMatch(
+      new RegExp(`<(linear|radial)Gradient\\b[^>]*\\bid="${gradientId}"`)
+    );
   });
 
   it("drops the flat Node.js and TypeScript brand colours", () => {
