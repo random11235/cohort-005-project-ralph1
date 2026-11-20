@@ -276,6 +276,12 @@ export default function InstructorLessonEditor({
             <p className="text-sm text-muted-foreground">
               Write lesson content in Markdown. Press Ctrl+S to format and save.
             </p>
+            <p className="text-sm text-muted-foreground">
+              Mark the point a Student must take away with a{" "}
+              <code>&gt; [!KEY]</code> line, then the point on the next{" "}
+              <code>&gt;</code> line. <code>[!TIP]</code>, <code>[!NOTE]</code>{" "}
+              and <code>[!WARNING]</code> work the same way.
+            </p>
           </CardHeader>
           <CardContent>
             <MonacoMarkdownEditor

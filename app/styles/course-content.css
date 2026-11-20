@@ -1,0 +1,164 @@
+/*
+ * Instructor-written content (lessons, sales copy), rendered by the
+ * course-content module inside `.prose`. The theme is greyscale; this gives
+ * the content one accent so the parts a Student must take away stand out.
+ */
+.course-content {
+  --cc-accent: oklch(0.511 0.262 276.966);
+  --cc-accent-soft: oklch(0.962 0.018 272.314);
+  --cc-highlight: oklch(0.945 0.129 101.54 / 0.55);
+  --cc-code-bg: oklch(0.967 0.003 264.542);
+  --cc-code-fg: oklch(0.457 0.24 277.023);
+}
+
+.dark .course-content {
+  --cc-accent: oklch(0.673 0.182 276.935);
+  --cc-accent-soft: oklch(0.257 0.09 281.288 / 0.6);
+  --cc-highlight: oklch(0.554 0.135 66.442 / 0.45);
+  --cc-code-bg: oklch(0.278 0.033 256.848);
+  --cc-code-fg: oklch(0.785 0.115 274.713);
+}
+
+.course-content > :first-child {
+  margin-top: 0;
+}
+
+.course-content h2 {
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--border);
+}
+
+.course-content h2::before {
+  content: "";
+  display: inline-block;
+  width: 0.3em;
+  height: 0.9em;
+  margin-right: 0.5em;
+  border-radius: 9999px;
+  background: var(--cc-accent);
+  vertical-align: -0.05em;
+}
+
+.course-content h3 {
+  color: var(--cc-accent);
+}
+
+/* The first paragraph under the opening heading is the lesson's summary. */
+.course-content > h2:first-child + p {
+  font-size: 1.15em;
+  color: var(--foreground);
+}
+
+.course-content strong {
+  padding: 0 0.15em;
+  border-radius: 0.2em;
+  background: linear-gradient(transparent 55%, var(--cc-highlight) 55%);
+}
+
+.course-content :not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: 0.3em;
+  background: var(--cc-code-bg);
+  color: var(--cc-code-fg);
+  font-weight: 500;
+}
+
+.course-content :not(pre) > code::before,
+.course-content :not(pre) > code::after {
+  content: none;
+}
+
+.course-content li::marker {
+  color: var(--cc-accent);
+}
+
+.course-content pre {
+  border: 1px solid oklch(1 0 0 / 0.08);
+  box-shadow: 0 1px 3px oklch(0 0 0 / 0.12);
+}
+
+.course-content blockquote {
+  border-left-color: var(--cc-accent);
+}
+
+/* Callouts: `> [!KEY]`, `> [!TIP]` and the rest of GitHub's alert syntax. */
+.course-content .callout {
+  --callout-color: var(--cc-accent);
+  --callout-bg: var(--cc-accent-soft);
+  margin: 1.5em 0;
+  padding: 0.9em 1.1em;
+  border-left: 4px solid var(--callout-color);
+  border-radius: 0.5em;
+  background: var(--callout-bg);
+}
+
+.course-content .callout > :last-child {
+  margin-bottom: 0;
+}
+
+.course-content .callout > p:not(.callout-title) {
+  margin: 0.4em 0;
+}
+
+.course-content .callout-title {
+  margin: 0 0 0.3em;
+  color: var(--callout-color);
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Teal, a hue no other callout uses, so a key point never reads as a warning. */
+.course-content .callout-key {
+  --callout-color: oklch(0.6 0.118 184.704);
+  --callout-bg: oklch(0.984 0.014 180.72);
+  border-left-width: 6px;
+  font-size: 1.05em;
+  font-weight: 500;
+}
+
+.course-content .callout-tip {
+  --callout-color: oklch(0.527 0.154 150.069);
+  --callout-bg: oklch(0.982 0.018 155.826);
+}
+
+.course-content .callout-important {
+  --callout-color: oklch(0.558 0.288 302.321);
+  --callout-bg: oklch(0.977 0.014 308.299);
+}
+
+.course-content .callout-warning {
+  --callout-color: oklch(0.555 0.163 48.998);
+  --callout-bg: oklch(0.987 0.026 102.212);
+}
+
+.course-content .callout-caution {
+  --callout-color: oklch(0.577 0.245 27.325);
+  --callout-bg: oklch(0.971 0.013 17.38);
+}
+
+.dark .course-content .callout-key {
+  --callout-color: oklch(0.855 0.138 181.071);
+  --callout-bg: oklch(0.277 0.046 192.524 / 0.5);
+}
+
+.dark .course-content .callout-warning {
+  --callout-color: oklch(0.828 0.189 84.429);
+  --callout-bg: oklch(0.279 0.077 45.635 / 0.5);
+}
+
+.dark .course-content .callout-tip {
+  --callout-color: oklch(0.792 0.209 151.711);
+  --callout-bg: oklch(0.266 0.065 152.934 / 0.5);
+}
+
+.dark .course-content .callout-important {
+  --callout-color: oklch(0.714 0.203 305.504);
+  --callout-bg: oklch(0.291 0.149 302.717 / 0.5);
+}
+
+.dark .course-content .callout-caution {
+  --callout-color: oklch(0.704 0.191 22.216);
+  --callout-bg: oklch(0.258 0.092 26.042 / 0.5);
+}

@@ -3,9 +3,10 @@ import { type Highlighter, createHighlighter } from "shiki";
 import type { Markdown } from "~/lib/text";
 
 // ─── Comment Rendering ───
-// Deliberately separate from renderMarkdown (~/lib/markdown.server).
+// Deliberately separate from renderCourseContent
+// (~/modules/course-content/index.server).
 //
-// renderMarkdown handles lesson content and sales copy, which are written by
+// renderCourseContent handles lesson content and sales copy, which are written by
 // instructors — trusted input, raw HTML allowed through. Comments are written by
 // students, so the same treatment would be stored XSS against every reader,
 // including the instructor and any admin who opens the questions queue.
