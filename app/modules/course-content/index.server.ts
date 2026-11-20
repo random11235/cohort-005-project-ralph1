@@ -4,7 +4,7 @@ import { render } from "./lib/render.server";
 /**
  * Renders Markdown an instructor wrote (lesson content, sales copy) to HTML.
  *
- * Raw HTML passes through: the author is trusted. Student-written Markdown
+ * Raw HTML passes through: the Instructor is trusted. Student-written Markdown
  * goes through `~/lib/comment-markdown.server` instead.
  *
  * The result is wrapped in `.course-content`, which `app/styles/course-content.css`
