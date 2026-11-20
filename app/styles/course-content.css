@@ -109,9 +109,10 @@
   text-transform: uppercase;
 }
 
+/* Teal, a hue no other callout uses, so a key point never reads as a warning. */
 .course-content .callout-key {
-  --callout-color: oklch(0.555 0.163 48.998);
-  --callout-bg: oklch(0.987 0.022 95.277);
+  --callout-color: oklch(0.6 0.118 184.704);
+  --callout-bg: oklch(0.984 0.014 180.72);
   border-left-width: 6px;
   font-size: 1.05em;
   font-weight: 500;
@@ -137,7 +138,11 @@
   --callout-bg: oklch(0.971 0.013 17.38);
 }
 
-.dark .course-content .callout-key,
+.dark .course-content .callout-key {
+  --callout-color: oklch(0.855 0.138 181.071);
+  --callout-bg: oklch(0.277 0.046 192.524 / 0.5);
+}
+
 .dark .course-content .callout-warning {
   --callout-color: oklch(0.828 0.189 84.429);
   --callout-bg: oklch(0.279 0.077 45.635 / 0.5);
