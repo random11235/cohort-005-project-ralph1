@@ -154,7 +154,7 @@ export function emptyNotificationFeed(): NotificationFeed {
   };
 }
 
-/** What the bell's badge reads: nothing at zero, capped at "9+". */
+/** What the Notification Feed button's badge reads: nothing at zero, capped at "9+". */
 export function badgeLabel(unseenCount: number): string | null {
   if (unseenCount <= 0) return null;
   return unseenCount > 9 ? "9+" : String(unseenCount);

@@ -10,7 +10,6 @@ import {
 import { Link, useNavigate } from "react-router";
 import { z } from "zod";
 import {
-  Bell,
   Check,
   GraduationCap,
   MessageSquare,
@@ -20,6 +19,7 @@ import {
 } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { UserAvatar } from "~/components/user-avatar";
+import { RipplesIcon } from "~/components/ripples-icon";
 import {
   badgeLabel,
   clickNotification,
@@ -31,7 +31,7 @@ import {
 } from "~/lib/notification-feed";
 
 // ─── Notification Feed ───
-// The bell in the sidebar header and its popover (variant A2 from
+// The ripples button in the sidebar header and its popover (variant A2 from
 // prototype/notification-feed). Everything here talks to the NotificationFeed
 // port, never to Knock.
 
@@ -110,7 +110,7 @@ function useNotificationFeed(): [NotificationFeed, FeedState] {
   return [feed, state];
 }
 
-export function NotificationBell() {
+export function NotificationFeedButton() {
   const [feed, state] = useNotificationFeed();
   const [open, setOpen] = useState(false);
   const badge = badgeLabel(state.unseenCount);
@@ -131,7 +131,7 @@ export function NotificationBell() {
         aria-label={`Notifications (${state.unseenCount} unseen)`}
         className="relative rounded-md p-1.5 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
       >
-        <Bell className="size-4" />
+        <RipplesIcon className="size-4" />
         {badge && (
           <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
             {badge}
@@ -197,7 +197,7 @@ function NotificationPopover({
   return (
     <div className="fixed left-56 top-2 z-50 ml-2 flex max-h-[calc(100vh-1rem)] w-[26rem] flex-col overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-2xl">
       <div className="flex items-center gap-2 bg-muted/60 px-4 py-3">
-        <Bell className="size-4" />
+        <RipplesIcon className="size-4" />
         <span className="font-semibold">Notifications</span>
         <button
           type="button"
